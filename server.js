@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +14,8 @@ connection.once('open', () => {
 app.use(express.json())
 const routes = require('./routes/articles')
 app.use('/api/articles', routes)
+const register = require('./routes/register')
+app.use('/api/register', register)
 app.listen(port, () => {
     console.log(`On Port ${port}`);
 })
