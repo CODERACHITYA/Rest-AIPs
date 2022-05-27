@@ -26,4 +26,17 @@ router.get('/:id', (req, res) => {
     })
 
 })
+router.patch('/:id', (req, res) => {
+    const idu = req.params.id
+    const { title, body, author } = req.body
+    Article.updateOne({ _id: idu }, { title, body, author }, (err, data) => {
+        if(err){
+            throw err
+        } if(data){
+            res.status(302).json(data)
+        } else {
+            res.status(404).render('not found')
+        }
+    })
+})
 module.exports = router
