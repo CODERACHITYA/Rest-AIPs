@@ -73,4 +73,8 @@ router.delete('/:id', (req, res) => {
         }
     })
 })
+router.get('/', async (req, res) => {
+    const articles = await Article.find()
+    return res.json(articles)
+})
 module.exports = router
