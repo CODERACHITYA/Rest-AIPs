@@ -24,30 +24,52 @@ router.get('/:id', (req, res) => {
             return res.status(404).json({ error: 'article not found' })
         }
     })
-
 })
 router.patch('/:id', (req, res) => {
     const idu = req.params.id
     const { title, body, author } = req.body
-    Article.updateOne({ _id: idu }, { title, body, author }, (err, data) => {
+    Article.findOne({_id: idu}, (err, document) => {
         if(err){
             throw err
-        } if(data){
-            res.status(202).json(data)
-        } else {
-            res.status(404).render('not found')
+        }if(document){
+            Article.updateOne({ _id: idu }, { title, body, author }, (err, data) => {
+                if(err){
+                    throw err
+                } if(data){
+                    Article.findOne({_id: idu}, (err, document) => {
+                        if(err){
+                            throw err
+                        }if(document){
+                            return res.json(document)
+                        }else{
+                            return res.status(404).json({ error: 'article not found' })
+                        }
+                    })
+                }
+            })
+        }else{
+            return res.status(404).json({ error: 'article not found' })
         }
     })
+
 })
 router.delete('/:id', (req, res) => {
     const idd = req.params.id
-    Article.deleteOne({_id: idd}, (err, data) => {
+    Article.findOne({_id: idd}, (err, document) => {
         if(err){
             throw err
-        } if(data){
-            res.status(204).json(data)
-        } else {
-            res.status(404).render('not found')
+        }if(document){
+            Article.deleteOne({_id: idd}, (err, data) => {
+                if(err){
+                    throw err
+                } if(data){
+                    res.send('deleted')
+                } else {
+                    res.status(404).render('not found')
+                }
+            })
+        }else{
+            return res.status(404).json({ error: 'article not found' })
         }
     })
 })
