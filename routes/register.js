@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
                     id: user._id,
                     name: user.name,
                     email: user.email
-                },process.env.JWT_Key)
+                },process.env.JWT_Key, { expiresIn: '30s' })
                 return res.send({
                     accessToken: accessToken,
                     type: 'Bearer'
