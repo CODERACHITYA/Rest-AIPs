@@ -13,4 +13,17 @@ router.post('/', (req,res) => {
         throw err;
     })
 })
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    Article.findOne({_id: id}, (err, document) => {
+        if(err){
+            throw err
+        }if(document){
+            return res.json(document)
+        }else{
+            return res.status(404).json({ error: 'article not found' })
+        }
+    })
+
+})
 module.exports = router
