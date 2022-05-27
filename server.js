@@ -16,6 +16,8 @@ const routes = require('./routes/articles')
 app.use('/api/articles', routes)
 const register = require('./routes/register')
 app.use('/api/register', register)
+const login = require('./routes/login')
+app.use('/api/login', login)
 app.listen(port, () => {
     console.log(`On Port ${port}`);
 })
