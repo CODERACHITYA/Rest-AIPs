@@ -33,7 +33,19 @@ router.patch('/:id', (req, res) => {
         if(err){
             throw err
         } if(data){
-            res.status(302).json(data)
+            res.status(202).json(data)
+        } else {
+            res.status(404).render('not found')
+        }
+    })
+})
+router.delete('/:id', (req, res) => {
+    const idd = req.params.id
+    Article.deleteOne({_id: idd}, (err, data) => {
+        if(err){
+            throw err
+        } if(data){
+            res.status(204).json(data)
         } else {
             res.status(404).render('not found')
         }
